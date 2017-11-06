@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TheMontiHallParadox</string>
+    <string name="new_game">New Game</string>
+    <string name="action_choose_the_door">Choose the door</string>
+    <string name="you_win">You win</string>
+    <string name="you_lose">You lose</string>
+    <string name="action_change_your_choice">You can change your choice</string>
+</resources>
