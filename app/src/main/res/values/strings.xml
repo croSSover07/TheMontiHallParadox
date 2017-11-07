@@ -9,4 +9,7 @@
     <string name="question_change_your_choice">Do you want to change your choice from %1$s to %2$s  ?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="one">One</string>
+    <string name="two">Two</string>
+    <string name="three">Three</string>
 </resources>

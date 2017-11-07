@@ -11,7 +11,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.example.developer.themontihallparadox.Common.Companion.getEnumNameByIndex
 import java.util.*
 
 
@@ -52,111 +51,90 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getAvailableDoor(chosenNumberDoor: Int) {
-        var doorIntOpen = 0
-        var chosenIntDoor = 0
-        var anotherIntDoor = 0
+        var openDoor = DoorEnum.ONE
+        var chosenDoor = DoorEnum.ONE
+        var anotherDoor = DoorEnum.ONE
 
         if (winNumberDoor == chosenNumberDoor) {
             when (chosenNumberDoor) {
-                Enum.ONE.ordinal -> {
-                    chosenIntDoor = Enum.ONE.ordinal
-                    doorIntOpen = Enum.TWO.ordinal
-                    anotherIntDoor = Enum.THREE.ordinal
+                DoorEnum.ONE.ordinal -> {
+                    chosenDoor = DoorEnum.ONE
+                    openDoor = DoorEnum.TWO
+                    anotherDoor = DoorEnum.THREE
                 }
-                Enum.TWO.ordinal -> {
-                    doorIntOpen = Enum.ONE.ordinal
-                    anotherIntDoor = Enum.THREE.ordinal
-                    chosenIntDoor = Enum.TWO.ordinal
+                DoorEnum.TWO.ordinal -> {
+                    openDoor = DoorEnum.ONE
+                    anotherDoor = DoorEnum.THREE
+                    chosenDoor = DoorEnum.TWO
                 }
-                Enum.THREE.ordinal -> {
-                    doorIntOpen = Enum.ONE.ordinal
-                    anotherIntDoor = Enum.TWO.ordinal
-                    chosenIntDoor = Enum.THREE.ordinal
+                DoorEnum.THREE.ordinal -> {
+                    openDoor = DoorEnum.ONE
+                    anotherDoor = DoorEnum.TWO
+                    chosenDoor = DoorEnum.THREE
                 }
             }
         } else {
             when (chosenNumberDoor) {
-                Enum.ONE.ordinal -> {
-                    chosenIntDoor = Enum.ONE.ordinal
-                    if (winNumberDoor == 1) {
-                        doorIntOpen = Enum.THREE.ordinal
-                        anotherIntDoor = Enum.TWO.ordinal
+                DoorEnum.ONE.ordinal -> {
+                    chosenDoor = DoorEnum.ONE
+                    if (winNumberDoor == DoorEnum.TWO.ordinal) {
+                        openDoor = DoorEnum.THREE
+                        anotherDoor = DoorEnum.TWO
                     } else {
-                        doorIntOpen = Enum.TWO.ordinal
-                        anotherIntDoor = Enum.THREE.ordinal
+                        openDoor = DoorEnum.TWO
+                        anotherDoor = DoorEnum.THREE
                     }
                 }
-                Enum.TWO.ordinal -> {
-                    chosenIntDoor = Enum.TWO.ordinal
-                    if (winNumberDoor == 0) {
-                        doorIntOpen = Enum.THREE.ordinal
-                        anotherIntDoor = Enum.ONE.ordinal
+                DoorEnum.TWO.ordinal -> {
+                    chosenDoor = DoorEnum.TWO
+                    if (winNumberDoor == DoorEnum.ONE.ordinal) {
+                        openDoor = DoorEnum.THREE
+                        anotherDoor = DoorEnum.ONE
                     } else {
-                        doorIntOpen = Enum.ONE.ordinal
-                        anotherIntDoor = Enum.THREE.ordinal
+                        openDoor = DoorEnum.ONE
+                        anotherDoor = DoorEnum.THREE
                     }
                 }
-                Enum.THREE.ordinal -> {
-                    chosenIntDoor = Enum.THREE.ordinal
-                    if (winNumberDoor == 0) {
-                        doorIntOpen = Enum.TWO.ordinal
-                        anotherIntDoor = Enum.ONE.ordinal
+                DoorEnum.THREE.ordinal -> {
+                    chosenDoor = DoorEnum.THREE
+                    if (winNumberDoor == DoorEnum.ONE.ordinal) {
+                        openDoor = DoorEnum.TWO
+                        anotherDoor = DoorEnum.ONE
                     } else {
-                        doorIntOpen = Enum.ONE.ordinal
-                        anotherIntDoor = Enum.TWO.ordinal
+                        openDoor = DoorEnum.ONE
+                        anotherDoor = DoorEnum.TWO
                     }
                 }
             }
         }
-//        Log.i("TAG", winNumberDoor.toString() + " " + doorIntOpen + " " + anotherIntDoor)
-        arrayListDoorImageView[doorIntOpen].apply {
+//        Log.i("TAG", winNumberDoor.toString() + " " + openDoor + " " + anotherDoor)
+        arrayListDoorImageView[openDoor.ordinal].apply {
             setImageResource(R.drawable.ic_door_goat)
             setBackgroundColor(Color.GRAY)
         }
-        showChangeChoiceAlertDialog(chosenIntDoor, doorIntOpen, anotherIntDoor)
+        showChangeChoiceAlertDialog(chosenDoor, openDoor, anotherDoor)
     }
 
-    private fun showChangeChoiceAlertDialog(chosenIntDoor: Int, doorIntOpen: Int, anotherIntDoor: Int) {
-        val anotherStringDoor = getEnumNameByIndex(anotherIntDoor)
-        val doorStringOpen = getEnumNameByIndex(doorIntOpen)
-        val chosenStringDoor = getEnumNameByIndex(chosenIntDoor)
-
-        AlertDialog.Builder(this@MainActivity,R.style.AppTheme_AlertDialog)
-                .setTitle(getString(R.string.action_door_number_is_open, doorStringOpen))
-                .setMessage(getString(R.string.question_change_your_choice, chosenStringDoor, anotherStringDoor))
+    private fun showChangeChoiceAlertDialog(chosenDoor: DoorEnum, doorOpen: DoorEnum, anotherDoor: DoorEnum) {
+        AlertDialog.Builder(this@MainActivity, R.style.AppTheme_AlertDialog)
+                .setTitle(getString(R.string.action_door_number_is_open, getString(doorOpen.getIdString())))
+                .setMessage(getString(
+                        R.string.question_change_your_choice,
+                        getString(chosenDoor.getIdString()),
+                        getString(anotherDoor.getIdString())))
                 .setPositiveButton(R.string.yes, { _, _ ->
-                    (arrayListDoorImageView[chosenIntDoor].parent as View).setBackgroundColor(Color.TRANSPARENT)
-                    checkForWin(anotherStringDoor)
+                    (arrayListDoorImageView[chosenDoor.ordinal].parent as View).setBackgroundColor(Color.TRANSPARENT)
+                    checkForWin(anotherDoor.ordinal)
                 })
                 .setNegativeButton(R.string.no, { _, _ ->
-                    checkForWin(chosenStringDoor)
+                    checkForWin(chosenDoor.ordinal)
                 })
                 .setCancelable(false)
                 .setOnDismissListener { newGameButton.visibility = View.VISIBLE }
                 .show()
     }
 
-    private fun newGame() {
-        setDefaultImage()
-        actionsTextView.setText(R.string.action_choose_the_door)
-        generateWinDoor()
-        newGameButton.visibility = View.INVISIBLE
-        actionsTextView.visibility = View.VISIBLE
-    }
-
-    private fun setDefaultImage() {
-        arrayListDoorImageView.forEach {
-            it.apply {
-                setImageResource(R.drawable.ic_close_door)
-                setBackgroundColor(Color.TRANSPARENT)
-                (parent as View).setBackgroundColor(Color.TRANSPARENT)
-                isClickable = true
-            }
-        }
-    }
-
-    private fun checkForWin(chosenStringDoor: String) {
-        val chosenIntDoor = Enum.valueOf(chosenStringDoor).ordinal
+    private fun checkForWin(chosenIntDoor: Int) {
         arrayListDoorImageView.forEach { it.isClickable = false }
         if (winNumberDoor == chosenIntDoor) {
             arrayListDoorImageView[winNumberDoor].apply {
@@ -176,7 +154,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             arrayListDoorImageView[winNumberDoor].apply {
                 setBackgroundColor(Color.GRAY)
                 setImageResource(R.drawable.ic_door_car)
-                //(parent as View).setBackgroundColor(Color.GREEN)
+            }
+        }
+    }
+
+    private fun newGame() {
+        setDefaultImage()
+        actionsTextView.setText(R.string.action_choose_the_door)
+        generateWinDoor()
+        newGameButton.visibility = View.INVISIBLE
+        actionsTextView.visibility = View.VISIBLE
+    }
+
+    private fun setDefaultImage() {
+        arrayListDoorImageView.forEach {
+            it.apply {
+                setImageResource(R.drawable.ic_close_door)
+                setBackgroundColor(Color.TRANSPARENT)
+                (parent as View).setBackgroundColor(Color.TRANSPARENT)
+                isClickable = true
             }
         }
     }
