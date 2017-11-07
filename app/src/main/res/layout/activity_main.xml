@@ -1,107 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context="com.example.developer.themontihallparadox.MainActivity">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView_actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@color/red"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView_actions"
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/appCompatImageButton_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_actions"
+        app:srcCompat="@drawable/ic_one" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout_first"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_new_game"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_0_33"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appCompatImageButton_one">
+
+        <ImageView
+            android:id="@+id/imageView_first_door"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_close_door" />
+    </android.support.constraint.ConstraintLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/appCompatImageButton_two"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_actions"
+        app:srcCompat="@drawable/ic_two" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout_two"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_new_game"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_0_66"
+        app:layout_constraintStart_toStartOf="@+id/guideline_0_33"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageButton_two">
 
-            <android.support.v7.widget.AppCompatImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/transparent"
-                app:srcCompat="@drawable/ic_one" />
-
-            <ImageView
-                android:id="@+id/imageView_first_door"
-                android:layout_width="match_parent"
-                android:layout_height="136dp"
-                app:srcCompat="@drawable/ic_close_door" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.AppCompatImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/transparent"
-                app:srcCompat="@drawable/ic_two" />
-
-            <ImageView
-                android:id="@+id/imageView_second_door"
-                android:layout_width="match_parent"
-                android:layout_height="136dp"
-                app:srcCompat="@drawable/ic_close_door" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.AppCompatImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/transparent"
-                app:srcCompat="@drawable/ic_three" />
-
-            <ImageView
-                android:id="@+id/imageView_third_door"
-                android:layout_width="match_parent"
-                android:layout_height="136dp"
-                app:srcCompat="@drawable/ic_close_door" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <Button
-            android:id="@+id/button_new_game"
+        <ImageView
+            android:id="@+id/imageView_second_door"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/red"
-            android:text="@string/new_game"
-            android:visibility="visible" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_close_door" />
+    </android.support.constraint.ConstraintLayout>
 
-</LinearLayout>
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/appCompatImageButton_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_actions"
+        app:srcCompat="@drawable/ic_three" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout_three"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_new_game"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_0_99"
+        app:layout_constraintStart_toStartOf="@+id/guideline_0_66"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageButton_three">
+
+        <ImageView
+            android:id="@+id/imageView_third_door"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_close_door" />
+    </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/button_new_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/red"
+        android:text="@string/new_game"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_0_33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_0_66"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.66" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_0_99"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.99" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,7 +24,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
+
         initViews()
         newGame()
     }
@@ -40,7 +46,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View) {
-        view.setBackgroundColor(Color.YELLOW)
+        (view.parent as View).setBackgroundColor(Color.YELLOW)
         actionsTextView.visibility = View.INVISIBLE
         getAvailableDoor(arrayListDoorImageView.indexOf(view as ImageView))
     }
@@ -103,7 +109,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 //        Log.i("TAG", winNumberDoor.toString() + " " + doorIntOpen + " " + anotherIntDoor)
-        arrayListDoorImageView[doorIntOpen].setImageResource(R.drawable.ic_door_goat)
+        arrayListDoorImageView[doorIntOpen].apply {
+            setImageResource(R.drawable.ic_door_goat)
+            setBackgroundColor(Color.GRAY)
+        }
         showChangeChoiceAlertDialog(chosenIntDoor, doorIntOpen, anotherIntDoor)
     }
 
@@ -112,11 +121,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val doorStringOpen = getEnumNameByIndex(doorIntOpen)
         val chosenStringDoor = getEnumNameByIndex(chosenIntDoor)
 
-        AlertDialog.Builder(this@MainActivity)
+        AlertDialog.Builder(this@MainActivity,R.style.AppTheme_AlertDialog)
                 .setTitle(getString(R.string.action_door_number_is_open, doorStringOpen))
                 .setMessage(getString(R.string.question_change_your_choice, chosenStringDoor, anotherStringDoor))
                 .setPositiveButton(R.string.yes, { _, _ ->
-                    arrayListDoorImageView[chosenIntDoor].setBackgroundColor(Color.TRANSPARENT)
+                    (arrayListDoorImageView[chosenIntDoor].parent as View).setBackgroundColor(Color.TRANSPARENT)
                     checkForWin(anotherStringDoor)
                 })
                 .setNegativeButton(R.string.no, { _, _ ->
@@ -140,6 +149,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             it.apply {
                 setImageResource(R.drawable.ic_close_door)
                 setBackgroundColor(Color.TRANSPARENT)
+                (parent as View).setBackgroundColor(Color.TRANSPARENT)
                 isClickable = true
             }
         }
@@ -151,18 +161,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (winNumberDoor == chosenIntDoor) {
             arrayListDoorImageView[winNumberDoor].apply {
                 setImageResource(R.drawable.ic_door_car)
-                setBackgroundColor(Color.GREEN)
+                setBackgroundColor(Color.GRAY)
+                (parent as View).setBackgroundColor(Color.GREEN)
             }
             Toast.makeText(this, "YOU WIN", Toast.LENGTH_SHORT).show()
         } else {
             arrayListDoorImageView[chosenIntDoor].apply {
                 setImageResource(R.drawable.ic_door_goat)
-                setBackgroundColor(Color.RED)
+                setBackgroundColor(Color.GRAY)
+                (parent as View).setBackgroundColor(Color.RED)
+
             }
             Toast.makeText(this, "YOU LOSE", Toast.LENGTH_SHORT).show()
             arrayListDoorImageView[winNumberDoor].apply {
+                setBackgroundColor(Color.GRAY)
                 setImageResource(R.drawable.ic_door_car)
-                setBackgroundColor(Color.GREEN)
+                //(parent as View).setBackgroundColor(Color.GREEN)
             }
         }
     }
