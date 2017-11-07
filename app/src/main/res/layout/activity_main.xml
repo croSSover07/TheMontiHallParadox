@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context="com.example.developer.themontihallparadox.MainActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5"
+        android:baselineAligned="false"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -87,6 +87,21 @@
                 app:srcCompat="@drawable/ic_close_door" />
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/button_new_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/red"
+            android:text="@string/new_game"
+            android:visibility="visible" />
     </LinearLayout>
 
 </LinearLayout>

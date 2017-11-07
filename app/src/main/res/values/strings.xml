@@ -5,4 +5,8 @@
     <string name="you_win">You win</string>
     <string name="you_lose">You lose</string>
     <string name="action_change_your_choice">You can change your choice</string>
+    <string name="action_door_number_is_open">Door %1$s is open</string>
+    <string name="question_change_your_choice">Do you want to change your choice from %1$s to %2$s  ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
