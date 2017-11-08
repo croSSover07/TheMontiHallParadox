@@ -8,6 +8,9 @@
     android:orientation="vertical"
     tools:context="com.example.developer.themontihallparadox.MainActivity">
 
+    <!-- TODO: Задача была сделать 1 ConstraintLayout и в нем расположить все вьюхи, но никак не делать ConstraintLayout в ConstraintLayout, причем даже если уже так и делаешь, то зачем тебе констрейнт тут? он бесполезен-->
+    <!-- TODO: Guideline лдя расположения дверей это плохой вариант. Еще раз почитай статью http://www.uwanttolearn.com/android/constraint-layout-concepts-hell-tips-tricks-part-2/ лучше использовать weight в этом случае -->
+
     <TextView
         android:id="@+id/textView_actions"
         android:layout_width="match_parent"
