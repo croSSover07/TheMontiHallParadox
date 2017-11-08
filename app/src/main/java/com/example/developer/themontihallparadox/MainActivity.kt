@@ -11,14 +11,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
-        val DOOR_IMAGE_VIEW_IDS = arrayListOf(R.id.imageView_first_door, R.id.imageView_second_door, R.id.imageView_third_door)
+        val DOOR_IMAGE_VIEW_IDS = arrayOf(R.id.imageView_first_door, R.id.imageView_second_door, R.id.imageView_third_door)
     }
 
     //  TODO: Naming. Можно было использовать массив.
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 //        TODO: Можно еще упростить получение рефренсов на вьюхи дверей, используя Kotlin Android Extensions
 //        https://kotlinlang.org/docs/tutorials/android-plugin.html
-        doorImageViews = arrayOf(imageView_first_door, imageView_second_door, imageView_first_door)
+//        doorImageViews = arrayOf(imageView_first_door, imageView_second_door, imageView_first_door)
 
         newGameButton = findViewById(R.id.button_new_game)
         newGameButton.setOnClickListener(this)
@@ -59,7 +58,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         startNewGame()
     }
 
-//    TODO: не зачем выносить в отдельный метод.
+    //    TODO: не зачем выносить в отдельный метод.
     private fun initViews() {
         actionsTextView = findViewById(R.id.textView_actions)
 
@@ -95,7 +94,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun startNewGame() {
         winDoor = Door.values()[random.nextInt(Door.values().size)]
 
-        Door.values().forEach { updateDoor(it, true) }
+        Door.values().forEach { updateDoor(it, false) }
 
         actionsTextView.setText(R.string.action_choose_the_door)
         newGameButton.visibility = View.INVISIBLE
@@ -125,6 +124,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun chooseDoorWihId(id: Int) {
+        if (chosenDoor != null) return
+
         val chosenDoor = Door.doorForViewWithId(id) ?: return
         val openedDoor = Door.values().first { it != winDoor && it != chosenDoor }
 
@@ -283,6 +284,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             updateDoor(it, true, it == winDoor)
         }
 
-        Toast.makeText(this,  if (chosenDoor == winDoor) R.string.you_win else R.string.you_lose, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, if (chosenDoor == winDoor) R.string.you_win else R.string.you_lose, Toast.LENGTH_SHORT).show()
     }
 }
