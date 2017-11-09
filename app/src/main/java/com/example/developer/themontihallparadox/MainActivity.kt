@@ -1,7 +1,9 @@
 package com.example.developer.themontihallparadox
 
+import android.animation.ValueAnimator
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -23,6 +25,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var winDoor = Door.ONE
 
     private var random = Random()
+
+    private val valueAnimator = ValueAnimator.ofArgb(Color.TRANSPARENT, Color.YELLOW).apply {
+        duration = 1000L
+        repeatCount = ValueAnimator.INFINITE
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +53,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         winDoor = Door.values()[random.nextInt(Door.values().size)]
 
         chosenDoor = null
+
+        valueAnimator.cancel()
+        valueAnimator.removeAllUpdateListeners()
+
         Door.values().forEach { updateDoor(it, false) }
 
         actionsTextView.setText(R.string.action_choose_the_door)
@@ -72,21 +83,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateDoor(door: Door, isOpened: Boolean, isWiningDoor: Boolean = false) {
+
         doorImageViews[door.ordinal].apply {
+            setBackgroundColor(Color.TRANSPARENT)
             if (isOpened) {
                 if (isWiningDoor) {
                     setImageResource(R.drawable.ic_door_car)
-                    setBackgroundResource(R.drawable.rect_win)
                 } else {
                     setImageResource(R.drawable.ic_door_goat)
-                    setBackgroundResource(if (door == chosenDoor) R.drawable.rect_choose else R.drawable.rect_lose)
                 }
             } else {
                 if (door == chosenDoor) {
-                    setBackgroundResource(R.drawable.rect_choose)
+                    startAnimation(this,
+                            ContextCompat.getColor(this@MainActivity, R.color.transparent),
+                            ContextCompat.getColor(this@MainActivity, R.color.choose))
                 } else {
                     setImageResource(R.drawable.ic_close_door)
-                    setBackgroundColor(Color.TRANSPARENT)
                 }
             }
         }
@@ -110,10 +122,31 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showResults(chosenDoor: Door) {
+        valueAnimator.cancel()
+        valueAnimator.removeAllUpdateListeners()
+
         Door.values().forEach {
             updateDoor(it, true, it == winDoor)
         }
 
+        if (chosenDoor == winDoor) {
+            startAnimation(doorImageViews[chosenDoor.ordinal],
+                    ContextCompat.getColor(this, R.color.transparent),
+                    ContextCompat.getColor(this, R.color.win))
+        } else {
+            startAnimation(doorImageViews[chosenDoor.ordinal],
+                    ContextCompat.getColor(this, R.color.transparent),
+                    ContextCompat.getColor(this, R.color.lose))
+        }
+
         Toast.makeText(this, if (chosenDoor == winDoor) R.string.you_win else R.string.you_lose, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun startAnimation(view: View, startColor: Int, endColor: Int) {
+        valueAnimator.apply {
+            setIntValues(startColor, endColor)
+            valueAnimator.addUpdateListener { view.setBackgroundColor(it.animatedValue as Int) }
+        }
+        valueAnimator.start()
     }
 }
