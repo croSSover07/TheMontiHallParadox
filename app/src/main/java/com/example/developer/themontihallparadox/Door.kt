@@ -3,8 +3,6 @@ package com.example.developer.themontihallparadox
 import android.support.annotation.IdRes
 import android.support.annotation.StringRes
 
-// TODO: не нужно дублировать в имени Enum, ты же не пишешь MainActivityClass.
-// https://kotlinlang.org/docs/reference/enum-classes.html
 enum class Door {
     ONE {
         override fun getViewId() = R.id.imageView_first_door
@@ -23,8 +21,6 @@ enum class Door {
         fun doorForViewWithId(id: Int) = values().firstOrNull { it.getViewId() == id }
     }
 
-//    TODO: Naming!
-//    abstract fun getIdString(): Int
     @StringRes
     abstract fun getTitleResId(): Int
 
